@@ -15,11 +15,11 @@ class EpisodesController < ApplicationController
         end
     end
 
-    def destroy
-        episode = find_episode
-        episode.destroy
-        head: :no_content
-    end
+    # def destroy
+    #     episode = find_episode
+    #     episode.destroy
+    #     head: :no_content
+    # end
     
     private
 
