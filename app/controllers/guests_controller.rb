@@ -1,7 +1,6 @@
 class GuestsController < ApplicationController
 
     def index
-        guests = Guest.all
-        render json: guests
+        render json: Guest.all
     end
 end

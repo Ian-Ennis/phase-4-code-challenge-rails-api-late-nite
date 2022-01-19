@@ -14,8 +14,8 @@ ActiveRecord::Schema.define(version: 2022_01_18_172002) do
 
   create_table "appearances", force: :cascade do |t|
     t.integer "rating"
-    t.integer "episode_id", null: false
-    t.integer "guest_id", null: false
+    t.integer "episode_id"
+    t.integer "guest_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["episode_id"], name: "index_appearances_on_episode_id"
@@ -36,6 +36,4 @@ ActiveRecord::Schema.define(version: 2022_01_18_172002) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "appearances", "episodes"
-  add_foreign_key "appearances", "guests"
 end

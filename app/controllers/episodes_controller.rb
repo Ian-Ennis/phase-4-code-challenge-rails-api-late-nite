@@ -1,25 +1,19 @@
 class EpisodesController < ApplicationController
-    rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
+    rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
     def index 
-        episodes = Episode.all 
-        render json: episodes
+        render json: Episode.all, status: :ok
     end
 
-    def show
-        episode = find_episode_by_id
-        if episode
-            render json: episode
-        else 
-            render json: {error: "Episode not found"}, status: :not_found
-        end
+    def show 
+        render json: find_episode, status: :ok, serializer: EpisodeGuestsSerializer
     end
-
-    # def destroy
-    #     episode = find_episode
-    #     episode.destroy
-    #     head: :no_content
-    # end
+    
+    def destroy
+        episode = find_episode
+        episode.destroy
+        head :no_content
+    end
     
     private
 
@@ -27,13 +21,8 @@ class EpisodesController < ApplicationController
         Episode.find(params[:id])
     end
 
-    def find_episode_by_id
-        episode = Episode.find_by(id: params[:id])
+    def record_not_found
+        render json: {"error": "Episode not found"}, status: :not_found
     end
-
-    def render_unprocessable_entity_response
-        render json: {errors: invalid.record.errors.full_messages}, status: :unprocessable_entity
-    end
-
 
 end
